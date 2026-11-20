@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Облачный ревизор — находим переплату в облаке за 5 дней</title>
+  <meta name="description" content="FinOps-советник анализирует счёт и метрики: что уменьшить, сколько сэкономить и чем рискнуть. White-label для облачных провайдеров, аудит для компаний.">
+  <meta name="theme-color" content="#2158F5">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Облачный ревизор — переплата в облаке за 5 дней">
+  <meta property="og:description" content="Анализируем счёт и метрики, показываем, какие ресурсы уменьшить, сколько это сэкономит и чем грозит.">
+  <meta property="og:image" content="assets/dashboard.png">
+  <meta property="og:locale" content="ru_RU">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232158F5'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='38' font-weight='700' fill='white' text-anchor='middle'%3E%E2%82%BD%3C/text%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Перейти к содержанию</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="#top" aria-label="Облачный ревизор — на главную">
+        <span class="brand__mark" aria-hidden="true">₽</span>
+        <span class="brand__name">Облачный ревизор</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#problem">Проблема</a>
+        <a href="#solution">Решение</a>
+        <a href="#demo">Демо</a>
+        <a href="#who">Кому</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="btn btn--primary btn--sm" href="#pilot">Запросить пилот</a>
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero__grid">
+        <div class="hero__copy reveal">
+          <p class="eyebrow">FinOps-советник для облака</p>
+          <h1>Найдите переплату в&nbsp;облаке <span class="accent">за 5 дней</span></h1>
+          <p class="lead">«Облачный ревизор» анализирует счёт и историю метрик, показывает, какие ресурсы уменьшить, сколько это сэкономит и чем грозит. Для облачных провайдеров и их клиентов.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#pilot">Запросить пилот</a>
+            <a class="btn btn--ghost" href="#demo">Смотреть демо</a>
+          </div>
+          <ul class="hero__meta">
+            <li>Пилот 4–5 недель</li>
+            <li>Только чтение</li>
+            <li>Без внешних LLM</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal">
+          <div class="browser">
+            <div class="browser__bar">
+              <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="browser__url">cloudrevisor.ru/dashboard</span>
+            </div>
+            <img src="assets/dashboard.png" alt="Дашборд: счёт 1 240 000 ₽, находимая экономия 340 000 ₽, 8 групп, 3 ресурса в зоне риска" width="1440" height="1040" fetchpriority="high">
+          </div>
+          <div class="float float--save" aria-hidden="true">
+            <span>Находимая экономия</span>
+            <strong>340 000 ₽<small>/мес</small></strong>
+            <small>27% счёта</small>
+          </div>
+          <div class="float float--risk" aria-hidden="true">
+            <span class="dot"></span>
+            <strong>3 ресурса</strong>
+            <small>не уменьшать</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <ul class="trust reveal">
+          <li><strong>225</strong> ресурсов в демо-парке</li>
+          <li><strong>8</strong> групп экономии</li>
+          <li><strong>0</strong> доступов на запись</li>
+          <li><strong>on-prem</strong> или SaaS</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Проблема</p>
+          <h2>Счёт за облако растёт. Понимания — нет.</h2>
+          <p class="section__lead">Компании держат избыточные мощности, не берут резервы, забывают диски и снапшоты. По отраслевым оценкам, <strong>23–40% облачных расходов</strong> в российских компаниях — избыточное потребление.</p>
+        </div>
+
+        <div class="grid grid--4">
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">↗</span>
+            <h3>Счёт растёт быстрее нагрузки</h3>
+            <p>Ресурсы добавляли под задачи, а потом задачи закончились. Мощности остались.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">?</span>
+            <h3>Непонятно, где перегрузка</h3>
+            <p>Средняя загрузка 12% ничего не говорит о пике в 90% в час отчёта.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">!</span>
+            <h3>Страшно уменьшать</h3>
+            <p>Вдруг в пик всё упадёт. Нет ответа, чем именно грозит изменение.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">₽</span>
+            <h3>Руководитель просит план</h3>
+            <p>А у команды только графики и выгрузки, а не решение с суммой.</p>
+          </article>
+        </div>
+
+        <aside class="callout reveal">
+          <p>У клиента есть счёт и метрики, но нет ответа на три вопроса:</p>
+          <ol>
+            <li>Где я переплачиваю?</li>
+            <li>Сколько ресурсов нужно на самом деле?</li>
+            <li>Чем я рискую, если уменьшу?</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="solution">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Решение</p>
+          <h2>Не дашборд, а решение с суммой и риском</h2>
+          <p class="section__lead">Четыре блока превращают сырые данные в отчёт, по которому можно действовать. Числа считает код, языковая модель только формулирует — она не может изменить сумму экономии.</p>
+        </div>
+
+        <ol class="flow">
+          <li class="flow__item reveal">
+            <span class="flow__num">01</span>
+            <h3>Сбор</h3>
+            <p>CSV, Parquet или read-only API. Один канонический формат, пропуск не считается нулём.</p>
+          </li>
+          <li class="flow__item reveal">
+            <span class="flow__num">02</span>
+            <h3>Профили</h3>
+            <p>P99.5, тренд, суточный профиль, длительность пиков, форма RAM, корреляция CPU и запросов.</p>
+          </li>
+          <li class="flow__item reveal">
+            <span class="flow__num">03</span>
+            <h3>Детекторы</h3>
+            <p>Размер, простой, расписание, объединение, «иглы», диски, снапшоты, резервы и отдельный блок риска.</p>
+          </li>
+          <li class="flow__item reveal">
+            <span class="flow__num">04</span>
+            <h3>Объяснение</h3>
+            <p>Что видим → вердикт → экономия ₽/мес → что сделать → риск → уверенность.</p>
+          </li>
+        </ol>
+
+        <div class="outcome reveal">
+          <div>
+            <h3>На выходе</h3>
+            <p>Отчёт, дашборд и PDF с одинаковыми цифрами. Плюс what-if и диалог по карточке ресурса.</p>
+          </div>
+          <ul class="ticks">
+            <li>Экономия в рублях, а не в процентах</li>
+            <li>Блок «не уменьшать» с причиной</li>
+            <li>Проверка «что будет, если»</li>
+            <li>Честное «недостаточно данных»</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Демо</p>
+          <h2>Посмотрите, как это выглядит</h2>
+          <p class="section__lead">Демонстрационный синтетический парк: 225 ресурсов, счёт 1,24 млн ₽/мес. Три экрана — обзор, карточка ресурса и блок риска.</p>
+        </div>
+
+        <div class="tabs reveal">
+          <div class="tabs__list" role="tablist" aria-label="Экраны демо">
+            <button class="tabs__btn is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-dashboard" id="tab-dashboard">Обзор парка</button>
+            <button class="tabs__btn" type="button" role="tab" aria-selected="false" aria-controls="panel-card" id="tab-card" tabindex="-1">Карточка ресурса</button>
+            <button class="tabs__btn" type="button" role="tab" aria-selected="false" aria-controls="panel-risk" id="tab-risk" tabindex="-1">Блок риска</button>
+          </div>
+
+          <div class="tabs__panel is-active" role="tabpanel" id="panel-dashboard" aria-labelledby="tab-dashboard">
+            <img src="assets/dashboard.png" alt="Обзор парка: счёт, экономия по 8 категориям и зона риска" width="1440" height="1040">
+            <p class="tabs__caption">Обзор: 340 000 ₽/мес экономии по 8 группам. Красным — ресурсы, которые нельзя уменьшать.</p>
+          </div>
+          <div class="tabs__panel" role="tabpanel" id="panel-card" aria-labelledby="tab-card" hidden>
+            <img class="tabs__img--portrait" src="assets/resource-card.png" alt="Карточка ресурса: график загрузки, вердикт, экономия и проверка" width="720" height="1040">
+            <p class="tabs__caption">Карточка: почему ресурс можно уменьшить, сколько это даст и что проверить перед изменением.</p>
+          </div>
+          <div class="tabs__panel" role="tabpanel" id="panel-risk" aria-labelledby="tab-risk" hidden>
+            <img class="tabs__img--portrait" src="assets/risk.png" alt="Блок риска: три ресурса, которые нельзя уменьшать, с причинами" width="720" height="520">
+            <p class="tabs__caption">Блок риска: три ресурса, которые трогать нельзя, и причина для каждого.</p>
+          </div>
+        </div>
+
+        <p class="note reveal">Цифры на экранах — синтетический демонстрационный парк, а не результат внедрения у клиента.</p>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Ключевые цифры демо-парка">
+      <div class="container stats__grid">
+        <div class="stat reveal"><strong>1 240 000 ₽</strong><span>счёт за месяц</span></div>
+        <div class="stat reveal"><strong>340 000 ₽</strong><span>находимая экономия</span></div>
+        <div class="stat reveal"><strong>27%</strong><span>от счёта</span></div>
+        <div class="stat reveal"><strong>3</strong><span>ресурса в зоне риска</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="who">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Кому</p>
+          <h2>Два канала, один продукт</h2>
+        </div>
+
+        <div class="grid grid--2">
+          <article class="audience reveal">
+            <span class="badge">Основной канал</span>
+            <h3>Облачным провайдерам и MSP</h3>
+            <p>White-label отчёт под вашим брендом: повод для разговора с клиентом, удержание и отличие от конкурентов.</p>
+            <ul class="ticks">
+              <li>Платит провайдер, клиент пользуется бесплатно</li>
+              <li>Отчёт встроен в клиентский портал</li>
+              <li>Один договор — сотни аккаунтов</li>
+            </ul>
+          </article>
+          <article class="audience reveal">
+            <span class="badge badge--soft">Второй канал</span>
+            <h3>Компаниям с 500+ ресурсами</h3>
+            <p>Аудит облачного счёта за 5 дней, план экономии и повторяемый процесс для банков, ритейла, телекома и промышленности.</p>
+            <ul class="ticks">
+              <li>Отчёт для CIO и финдиректора</li>
+              <li>Несколько облаков в одном отчёте</li>
+              <li>Пилот 4–5 недель</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="security">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow eyebrow--light">Безопасность</p>
+          <h2>Данные остаются у вас</h2>
+          <p class="section__lead">Продукт не меняет инфраструктуру и не требует доступа на запись. Всё, что нужно для отчёта, — счёт и метрики.</p>
+        </div>
+        <ul class="security">
+          <li class="reveal"><strong>Только чтение</strong><span>Мы не управляем ресурсами и не пишем в API облака.</span></li>
+          <li class="reveal"><strong>Без персональных данных</strong><span>Только идентификаторы ресурсов, цены и метрики.</span></li>
+          <li class="reveal"><strong>On-prem или VPC</strong><span>Развёртывание в вашем контуре или как SaaS.</span></li>
+          <li class="reveal"><strong>LLM отключаема</strong><span>Отчёт, дашборд и PDF работают без сети и без модели.</span></li>
+          <li class="reveal"><strong>Детерминизм</strong><span>Одинаковый вход даёт одинаковый отчёт. Числа проверяемы.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container faq">
+        <div class="section__head reveal">
+          <p class="eyebrow">Вопросы</p>
+          <h2>Коротко о главном</h2>
+        </div>
+        <div class="faq__list">
+          <details class="reveal">
+            <summary>Вы гарантируете экономию?</summary>
+            <p>Нет. Мы находим и обосновываем экономию, а решение и внедрение остаются за вами. На пилоте фиксируем, сколько рекомендаций реально внедрено.</p>
+          </details>
+          <details class="reveal">
+            <summary>Нужно давать доступ на запись?</summary>
+            <p>Нет. Минимальный пакет — счёт за 3+ месяца, CPU и RAM с шагом 5 минут за 30 дней, цены и часовой пояс. Доступ только на чтение.</p>
+          </details>
+          <details class="reveal">
+            <summary>Сколько ждать первый отчёт?</summary>
+            <p>5 рабочих дней после получения данных. Пилот с проверкой рекомендаций — 4–5 недель.</p>
+          </details>
+          <details class="reveal">
+            <summary>Что если данных мало?</summary>
+            <p>Система честно скажет «недостаточно данных» и запросит конкретные срезы. Пустой отчёт с красивыми цифрами мы не выдаём.</p>
+          </details>
+          <details class="reveal">
+            <summary>Вы заменяете Yandex Cloud Advisor или Cloud.ru?</summary>
+            <p>Нет. Мы работаем поверх нативных инструментов, умеем несколько облаков и отдаём провайдеру white-label слой решений.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta" id="pilot">
+      <div class="container cta">
+        <div class="cta__copy reveal">
+          <p class="eyebrow">Пилот</p>
+          <h2>Покажем переплату на ваших данных</h2>
+          <p>Бесплатный пилот на 4–5 недель. Разберём один клиентский парк или облачный счёт компании, покажем отчёт и зафиксируем метрики.</p>
+          <ul class="ticks">
+            <li>Первый отчёт за 5 дней</li>
+            <li>Read-only доступ или файлы</li>
+            <li>Без обязательств и оплаты</li>
+          </ul>
+          <p class="cta__direct">Или напишите напрямую: <a href="mailto:hello@cloudrevisor.ru">hello@cloudrevisor.ru</a></p>
+        </div>
+
+        <form class="form reveal" id="pilot-form" novalidate>
+          <div class="form__row">
+            <label class="field">
+              <span>Имя*</span>
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label class="field">
+              <span>Компания*</span>
+              <input type="text" name="company" autocomplete="organization" required>
+            </label>
+          </div>
+          <div class="form__row">
+            <label class="field">
+              <span>Роль</span>
+              <input type="text" name="role" autocomplete="organization-title" placeholder="CIO, FinOps, инфраструктура">
+            </label>
+            <label class="field">
+              <span>Рабочая почта*</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+          <label class="field">
+            <span>Сколько ресурсов в облаке</span>
+            <select name="resources">
+              <option value="">Выберите</option>
+              <option>до 100</option>
+              <option>100–500</option>
+              <option>500–2000</option>
+              <option>2000+</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Комментарий</span>
+            <textarea name="comment" rows="3" placeholder="Какие облака используете, что хотите проверить"></textarea>
+          </label>
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            <span>Согласен на обработку персональных данных для связи по заявке.</span>
+          </label>
+          <button class="btn btn--primary btn--wide" type="submit">Запросить пилот</button>
+          <p class="form__note" id="form-note" role="status">Откроется почтовый клиент — письмо уйдёт на hello@cloudrevisor.ru.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="brand brand--footer" href="#top">
+        <span class="brand__mark" aria-hidden="true">₽</span>
+        <span class="brand__name">Облачный ревизор</span>
+      </a>
+      <p class="footer__note">Демонстрационные данные синтетические. MVP в разработке.</p>
+      <p class="footer__copy">© 2026 · <a href="mailto:hello@cloudrevisor.ru">hello@cloudrevisor.ru</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
