@@ -818,6 +818,19 @@ ol {
   font-size: 13px;
 }
 
+.demo-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin-top: 22px;
+}
+
+.demo-cta span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 /* Stats */
 
 .stats {

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Облачный ревизор — демо</title>
+  <meta name="description" content="Кликабельный демо-стенд FinOps-советника: счёт, экономия, риск, what-if и чат по числам.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Облачный ревизор — демо">
+      <img src="assets/logo.svg" alt="" width="32" height="32">
+      <span class="brand__name">FinOps-советник</span>
+      <span class="demo-badge">ДЕМО</span>
+    </a>
+    <nav class="nav" aria-label="Разделы демо">
+      <a href="#top" class="is-active">Обзор</a>
+      <a href="#resourcesPanel">Ресурсы</a>
+      <a href="#riskPanel">Риск</a>
+      <button type="button" id="navReport">Отчёт</button>
+    </nav>
+    <div class="topbar__right">
+      <span class="account">Cloud RU</span>
+      <button class="icon-btn" type="button" id="scenarioBtn" title="Сценарий демо">Сценарий</button>
+    </div>
+  </header>
+
+  <main class="page" id="top">
+    <section class="page-head">
+      <div>
+        <p class="eyebrow">Демонстрационный синтетический парк</p>
+        <h1>Обзор парка</h1>
+        <p class="page-sub"><span id="metaResources">225</span> ресурсов · <span id="metaPeriod">октябрь 2026</span> · шаг <span id="metaStep">60 с</span></p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn--ghost" type="button" id="resetBtn">Сбросить демо</button>
+        <button class="btn btn--primary" type="button" id="reportBtn">Отчёт PDF</button>
+      </div>
+    </section>
+
+    <section class="summary-grid" aria-label="Сводка">
+      <article class="summary-card">
+        <div class="summary-card__label"><span class="dot dot--blue"></span>Счёт за месяц</div>
+        <div class="summary-card__value" id="billValue">1 240 000 ₽</div>
+        <div class="summary-card__sub">по строкам биллинга</div>
+      </article>
+      <article class="summary-card">
+        <div class="summary-card__label"><span class="dot dot--green"></span>Находимая экономия</div>
+        <div class="summary-card__value" id="savingsValue">340 000 ₽</div>
+        <div class="summary-card__sub" id="savingsSub">27% счёта · 8 групп</div>
+      </article>
+      <article class="summary-card">
+        <div class="summary-card__label"><span class="dot dot--red"></span>В зоне риска</div>
+        <div class="summary-card__value" id="riskValue">3 ресурса</div>
+        <div class="summary-card__sub">пик &gt; 85% · не уменьшать</div>
+      </article>
+    </section>
+
+    <section class="toolbar" aria-label="Фильтры">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="search" id="searchInput" placeholder="Найти ресурс или владельца" autocomplete="off">
+      </label>
+      <div class="chips" id="typeChips" role="group" aria-label="Тип ресурса">
+        <button type="button" class="chip is-active" data-type="all">Все</button>
+        <button type="button" class="chip" data-type="ВМ">ВМ</button>
+        <button type="button" class="chip" data-type="Диск">Диски</button>
+        <button type="button" class="chip" data-type="Снапшот">Снапшоты</button>
+      </div>
+      <div class="peak">
+        <label for="peakRange">Целевой пик</label>
+        <input type="range" id="peakRange" min="60" max="80" step="1" value="70">
+        <output id="peakValue" for="peakRange">70%</output>
+      </div>
+    </section>
+
+    <section class="category-grid" id="categoryGrid" aria-label="Группы экономии"></section>
+
+    <section class="lower-grid">
+      <article class="panel risk-panel" id="riskPanel">
+        <div class="panel__head">
+          <div>
+            <h2>В зоне риска</h2>
+            <p>Не уменьшать: пик &gt; 85% или IOPS на грани</p>
+          </div>
+          <span class="pill pill--red" id="riskCount">3</span>
+        </div>
+        <div class="risk-list" id="riskList"></div>
+      </article>
+
+      <article class="panel chat-panel" id="chatPanel">
+        <div class="panel__head">
+          <div>
+            <h2>Спросите про сервер</h2>
+            <p>LLM не считает: числа возвращают инструменты</p>
+          </div>
+          <span class="llm-badge">офлайн</span>
+        </div>
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <div class="chat-suggestions" id="chatSuggestions"></div>
+        <form class="chat-form" id="chatForm">
+          <input type="text" id="chatInput" placeholder="Задать вопрос..." autocomplete="off" aria-label="Вопрос по данным">
+          <button type="submit" aria-label="Отправить">→</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="panel resources-panel" id="resourcesPanel">
+      <div class="panel__head">
+        <div>
+          <h2 id="resourcesTitle">Ресурсы</h2>
+          <p id="resourcesSub">Показаны ресурсы с рекомендациями и риском</p>
+        </div>
+        <button class="btn btn--small" type="button" id="clearFilter">Показать все</button>
+      </div>
+      <div class="table-wrap">
+        <table class="resource-table">
+          <thead>
+            <tr>
+              <th>Ресурс</th>
+              <th>Тип</th>
+              <th>Группа</th>
+              <th>Сейчас → нужно</th>
+              <th class="num">Экономия</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="resourceRows"></tbody>
+        </table>
+      </div>
+      <div class="table-empty" id="tableEmpty" hidden>Ничего не найдено. Попробуйте другой запрос.</div>
+    </section>
+
+    <footer class="page-foot">
+      <span>Демонстрационные данные, синтетический парк. Не является результатом внедрения.</span>
+      <span>cloudrevisor.ru</span>
+    </footer>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Карточка ресурса"></aside>
+
+  <div class="modal-backdrop" id="reportModal" hidden>
+    <div class="report" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+      <div class="report__bar">
+        <span id="reportTitle">Отчёт для руководителя</span>
+        <div>
+          <button class="btn btn--small" type="button" id="printReport">Печать / PDF</button>
+          <button class="btn btn--small btn--ghost" type="button" data-close="reportModal">Закрыть</button>
+        </div>
+      </div>
+      <div class="report__body" id="reportBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="scenarioModal" hidden>
+    <div class="scenario" role="dialog" aria-modal="true" aria-labelledby="scenarioTitle">
+      <div class="report__bar">
+        <span id="scenarioTitle">Сценарий демо · 3 минуты</span>
+        <button class="btn btn--small btn--ghost" type="button" data-close="scenarioModal">Закрыть</button>
+      </div>
+      <div class="scenario__body">
+        <ol class="scenario-list">
+          <li><b>0:00–0:15</b><span>Дашборд. «Счёт 1 240 000 ₽, 340 тысяч из них — переплата».</span></li>
+          <li><b>0:15–0:45</b><span>«Завышен размер» → <code>orders-api-04</code>. Экономия 16 300 ₽/мес.</span></li>
+          <li><b>0:45–1:05</b><span>«Прогнать историю»: 0 переполнений, запас 18%.</span></li>
+          <li><b>1:05–1:30</b><span>«Объединение»: две ВМ не работают одновременно.</span></li>
+          <li><b>1:30–1:50</b><span>Блок риска: <code>billing-db-02</code>, <code>vm-risk-01/02</code>.</span></li>
+          <li><b>1:50–2:15</b><span>Ползунок 70 → 80%: экономия растёт, риск тоже.</span></li>
+          <li><b>2:15–2:35</b><span>Чат: «Почему billing-db-02 в риске?»</span></li>
+          <li><b>2:35–3:00</b><span>PDF и итог: 225 ресурсов, 340 тыс., 3 риска.</span></li>
+        </ol>
+        <button class="btn btn--primary" type="button" id="startScenario">Начать с начала</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
