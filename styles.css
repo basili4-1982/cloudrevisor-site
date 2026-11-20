@@ -134,17 +134,12 @@ ol {
 }
 
 .brand__mark {
-  display: grid;
-  place-items: center;
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: var(--blue);
-  color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  box-shadow: 0 6px 16px -6px rgba(33, 88, 245, 0.7);
+  object-fit: contain;
+  flex: 0 0 auto;
+  box-shadow: 0 6px 16px -8px rgba(33, 88, 245, 0.6);
 }
 
 .brand__name {
@@ -1168,7 +1163,6 @@ ol {
 .brand--footer .brand__mark {
   width: 28px;
   height: 28px;
-  font-size: 16px;
   border-radius: 8px;
 }
 
