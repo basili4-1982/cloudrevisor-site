@@ -94,9 +94,14 @@
         <div class="panel__head">
           <div>
             <h2>Спросите про сервер</h2>
-            <p>LLM не считает: числа возвращают инструменты</p>
+            <p>LLM не считает · лимит 5 000 токенов</p>
           </div>
           <span class="llm-badge">офлайн</span>
+        </div>
+        <div class="token-meter" id="tokenMeter">
+          <div class="token-meter__top"><span>Аккаунт: <b id="tokenAccount">—</b></span><b id="tokenUsage">0 / 5 000</b></div>
+          <div class="token-meter__bar"><span id="tokenBar"></span></div>
+          <div class="token-meter__foot"><span id="tokenCost">0,00 ₽</span><span><button class="link-btn" type="button" id="switchAccount">сменить</button> · до 600 токенов</span></div>
         </div>
         <div class="chat-log" id="chatLog" aria-live="polite"></div>
         <div class="chat-suggestions" id="chatSuggestions"></div>
@@ -155,6 +160,23 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="accountModal" hidden>
+    <div class="account-gate" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+      <div class="account-gate__brand">
+        <img src="assets/logo.svg" alt="" width="34" height="34">
+        <span>FinOps-советник</span>
+      </div>
+      <h2 id="accountTitle">Демо по запросу</h2>
+      <p>Введите рабочую почту — привяжем к аккаунту бюджет токенов. На аккаунт 5 000 токенов, ответ до 600. Демо не вызывает LLM: ответы заготовлены.</p>
+      <form id="accountForm">
+        <label>Рабочая почта<input type="email" id="accountEmail" required placeholder="you@company.ru" autocomplete="email"></label>
+        <label>Компания<input type="text" id="accountCompany" placeholder="Название компании" autocomplete="organization"></label>
+        <button class="btn btn--primary" type="submit">Начать демо</button>
+        <p class="account-gate__note">Демо синтетическое. Почта хранится только в вашем браузере и нужна, чтобы привязать бюджет к аккаунту.</p>
+      </form>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="scenarioModal" hidden>
     <div class="scenario" role="dialog" aria-modal="true" aria-labelledby="scenarioTitle">
       <div class="report__bar">
@@ -172,6 +194,7 @@
           <li><b>2:15–2:35</b><span>Чат: «Почему billing-db-02 в риске?»</span></li>
           <li><b>2:35–3:00</b><span>PDF и итог: 225 ресурсов, 340 тыс., 3 риска.</span></li>
         </ol>
+        <p class="scenario-note">Демо-чат ограничен 5 000 токенов на аккаунт; ответ — до 600. «Сбросить демо» не обнуляет бюджет аккаунта.</p>
         <button class="btn btn--primary" type="button" id="startScenario">Начать с начала</button>
       </div>
     </div>

@@ -596,12 +596,70 @@ h3 {
   font-weight: 600;
 }
 
+.token-meter {
+  margin: 0 18px 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.token-meter__top,
+.token-meter__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.token-meter__top b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.token-meter__bar {
+  height: 4px;
+  margin-top: 5px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.token-meter__bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.token-meter__bar span.is-warn {
+  background: var(--amber);
+}
+
+.token-meter__bar span.is-full {
+  background: var(--red);
+}
+
+.token-meter__foot {
+  margin-top: 4px;
+  color: var(--soft);
+  font-size: 8px;
+}
+
+.token-meter.is-exhausted {
+  border-color: #fecaca;
+  background: var(--red-soft);
+}
+
 .chat-log {
   display: flex;
   flex-direction: column;
   gap: 7px;
-  min-height: 128px;
-  max-height: 190px;
+  min-height: 96px;
+  max-height: 150px;
   padding: 8px 18px 4px;
   overflow: auto;
 }
@@ -1159,6 +1217,106 @@ h3 {
   color: var(--red);
 }
 
+.token-meter__top span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-meter__top b {
+  flex: 0 0 auto;
+}
+
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+/* Account gate */
+
+.account-gate {
+  width: min(440px, 100%);
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 26px;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.account-gate__brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.account-gate__brand img {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+
+.account-gate h2 {
+  margin-top: 18px;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+
+.account-gate > p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.account-gate form {
+  display: grid;
+  gap: 11px;
+  margin-top: 18px;
+}
+
+.account-gate label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.account-gate input {
+  height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  outline: 0;
+  background: #f8fafc;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.account-gate input:focus {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.account-gate .btn {
+  margin-top: 4px;
+}
+
+.account-gate__note {
+  color: var(--soft);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
 /* Modals */
 
 .modal-backdrop {
@@ -1317,6 +1475,12 @@ h3 {
 
 .scenario-list b {
   color: var(--accent);
+  font-size: 10px;
+}
+
+.scenario-note {
+  margin: 0 0 14px;
+  color: var(--muted);
   font-size: 10px;
 }
 

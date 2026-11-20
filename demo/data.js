@@ -11,6 +11,9 @@ const DEMO_META = {
   savings: 340000,
   period: "октябрь 2026",
   step: "60 с",
+  tokenBudget: 5000,
+  tokenPrice: 0.00012,
+  answerTokenLimit: 600,
 };
 
 const CATEGORIES = [

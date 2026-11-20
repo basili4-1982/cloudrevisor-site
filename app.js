@@ -161,6 +161,8 @@
         "Почта: " + email,
         "Ресурсов в облаке: " + (resources || "—"),
         "",
+        "Демо по вашему аккаунту: https://cloudrevisor.ru/demo/?account=" + encodeURIComponent(email),
+        "",
         "Комментарий:",
         comment || "—"
       ].join("\n");

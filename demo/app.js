@@ -14,6 +14,8 @@
       },
     ],
     typing: false,
+    tokensUsed: 0,
+    account: "",
   };
 
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -34,6 +36,58 @@
 
   function fmt(n) {
     return `${Math.round(n).toLocaleString("ru-RU")} ₽`;
+  }
+
+  function num(n) {
+    return Math.round(n).toLocaleString("ru-RU");
+  }
+
+  function estimateTokens(text) {
+    return Math.max(20, Math.ceil(String(text).length / 3.5));
+  }
+
+  const ACCOUNT_KEY = "cloudrevisor:demo:account";
+  const TOKEN_PREFIX = "cloudrevisor:demo:tokens:";
+
+  function storageGet(key) {
+    try { return localStorage.getItem(key) || ""; } catch (error) { return ""; }
+  }
+
+  function storageSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (error) { /* no-op */ }
+  }
+
+  function storageRemove(key) {
+    try { localStorage.removeItem(key); } catch (error) { /* no-op */ }
+  }
+
+  function normalizeAccount(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function loadAccount() {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = normalizeAccount(params.get("account") || params.get("email"));
+    if (fromUrl) {
+      storageSet(ACCOUNT_KEY, fromUrl);
+      return fromUrl;
+    }
+    return normalizeAccount(storageGet(ACCOUNT_KEY));
+  }
+
+  function tokenKey(account) {
+    return TOKEN_PREFIX + account;
+  }
+
+  function loadTokens(account) {
+    const stored = Number(storageGet(tokenKey(account)));
+    if (!Number.isFinite(stored) || stored < 0) return 0;
+    return Math.min(DEMO_META.tokenBudget, Math.round(stored));
+  }
+
+  function saveTokens(account, value) {
+    if (!account) return;
+    storageSet(tokenKey(account), String(Math.min(DEMO_META.tokenBudget, Math.round(value))));
   }
 
   function plural(n, forms) {
@@ -184,6 +238,36 @@
 
   // ---------- Chat ----------
 
+  function renderTokens() {
+    const budget = DEMO_META.tokenBudget;
+    const used = Math.min(state.tokensUsed, budget);
+    const pct = Math.min(100, (used / budget) * 100);
+    const bar = $("#tokenBar");
+    if (!bar) return;
+
+    $("#tokenAccount").textContent = state.account || "—";
+    $("#tokenUsage").textContent = `${num(used)} / ${num(budget)}`;
+    bar.style.width = `${pct}%`;
+    bar.classList.toggle("is-warn", pct >= 70 && pct < 100);
+    bar.classList.toggle("is-full", pct >= 100);
+    $("#tokenCost").textContent = `${(used * DEMO_META.tokenPrice).toFixed(2).replace(".", ",")} ₽`;
+    $("#tokenMeter").classList.toggle("is-exhausted", used >= budget);
+
+    const exhausted = used >= budget;
+    const locked = !state.account || exhausted;
+    const input = $("#chatInput");
+    const button = $("#chatForm button");
+    if (input) {
+      input.disabled = locked;
+      input.placeholder = !state.account
+        ? "Введите почту, чтобы начать"
+        : exhausted
+          ? "Лимит аккаунта исчерпан — смените аккаунт"
+          : "Задать вопрос...";
+    }
+    if (button) button.disabled = locked;
+  }
+
   function renderChat() {
     const log = $("#chatLog");
     log.innerHTML = state.chat.map((msg) => {
@@ -211,6 +295,22 @@
   function sendChat(text) {
     const value = String(text || "").trim();
     if (!value || state.typing) return;
+
+    if (!state.account) {
+      showAccountGate();
+      return;
+    }
+
+    if (state.tokensUsed >= DEMO_META.tokenBudget) {
+      state.chat.push({
+        role: "bot",
+        text: `Лимит токенов демо исчерпан (${num(DEMO_META.tokenBudget)}). Сбросьте демо, чтобы продолжить.`,
+        tools: [],
+      });
+      renderChat();
+      return;
+    }
+
     state.chat.push({ role: "user", text: value, tools: [] });
     state.typing = true;
     renderChat();
@@ -219,6 +319,12 @@
       const answer = answerFor(value);
       state.typing = false;
       state.chat.push({ role: "bot", text: answer.text, tools: answer.tools || [] });
+      state.tokensUsed = Math.min(
+        DEMO_META.tokenBudget,
+        state.tokensUsed + estimateTokens(value) + estimateTokens(answer.text) + 320
+      );
+      saveTokens(state.account, state.tokensUsed);
+      renderTokens();
       renderChat();
     }, 650);
   }
@@ -506,11 +612,13 @@
       },
     ];
     state.typing = false;
+    state.tokensUsed = loadTokens(state.account);
     $("#searchInput").value = "";
     $("#peakRange").value = "70";
     $("#peakValue").textContent = "70%";
     setActiveChip("all");
     renderAll();
+    renderTokens();
     closeDrawer();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -529,6 +637,41 @@
     renderChat();
   }
 
+  function showAccountGate() {
+    const modal = $("#accountModal");
+    if (!modal) return;
+    modal.hidden = false;
+    window.setTimeout(() => $("#accountEmail")?.focus(), 60);
+  }
+
+  function applyAccount(account) {
+    state.account = normalizeAccount(account);
+    state.tokensUsed = loadTokens(state.account);
+    state.typing = false;
+    state.chat = [
+      {
+        role: "bot",
+        text: `Аккаунт ${state.account}. Бюджет демо — ${num(DEMO_META.tokenBudget)} токенов, ответ до 600. Спросите про любой ресурс.`,
+        tools: [],
+      },
+    ];
+    $("#tokenAccount").textContent = state.account;
+    $("#accountModal").hidden = true;
+    renderTokens();
+    renderChat();
+  }
+
+  function switchAccount() {
+    storageRemove(ACCOUNT_KEY);
+    state.account = "";
+    state.tokensUsed = 0;
+    $("#tokenAccount").textContent = "—";
+    $("#accountEmail").value = "";
+    $("#accountCompany").value = "";
+    showAccountGate();
+    renderTokens();
+  }
+
   // ---------- Init ----------
 
   function init() {
@@ -537,7 +680,24 @@
     $("#metaStep").textContent = DEMO_META.step;
     $("#billValue").textContent = fmt(DEMO_META.bill);
 
+    state.account = loadAccount();
     renderAll();
+    renderTokens();
+    if (state.account) applyAccount(state.account);
+
+    $("#accountForm")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const email = normalizeAccount($("#accountEmail").value);
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        $("#accountEmail").reportValidity();
+        return;
+      }
+      storageSet(ACCOUNT_KEY, email);
+      applyAccount(email);
+    });
+
+    $("#switchAccount")?.addEventListener("click", switchAccount);
+    if (!state.account) showAccountGate();
 
     $("#searchInput").addEventListener("input", (event) => {
       state.search = event.target.value;
@@ -609,6 +769,7 @@
     });
 
     $$(".modal-backdrop").forEach((backdrop) => {
+      if (backdrop.id === "accountModal") return;
       backdrop.addEventListener("click", (event) => {
         if (event.target === backdrop) backdrop.hidden = true;
       });
